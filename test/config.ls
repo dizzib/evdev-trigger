@@ -26,14 +26,23 @@ describe 'missing' ->
   beforeEach -> rm \-f args.config-path
   test 'with default config-path should copy default.conf' ->
     args.is-default-config-path = true
+    expect do
+      '/dev/input/event0':'*': run:'echo 0'
+      '/dev/input/event1':'*': run:'echo 1'
   test 'with overridden config-path' ->
     args.is-default-config-path = false
     T.load!; A.isNull T.get!
 
 test 'empty' -> run \empty {}
 
-test.skip 'updated file should auto-reload' (done) ->
+test 'updated file should auto-reload' (done) ->
+  run \event0 '/dev/input/event0':'*': run:'echo 0'
+  prepare \event1
+  setTimeout (-> expect '/dev/input/event1':'*': run:'echo 1'; done!), 5
 
-describe.skip 'error' ->
+describe 'error' ->
   function run id, expect then prepare id; A.throws T.load, expect
-  test 'malformed' -> run \malformed ''
+  test 'bad-path' -> run \bad-path 'Bad path'
+  test 'bad-rule-filter' -> run \bad-rule-filter 'Bad rule filter'
+  test 'missing-rule-run' -> run \missing-rule-run 'Bad rule'
+  test 'empty-rule-run' -> run \empty-rule-run 'Bad rule'

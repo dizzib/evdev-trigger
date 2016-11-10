@@ -6,7 +6,7 @@ Args  = require \./args
 Const = require \./constants
 G     = require \./growl
 
-const RUNCMD = 'trigger -d'
+const RUNCMD = 'trigger -d -v'
 
 module.exports = me =
   recycle: ->
