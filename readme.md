@@ -3,8 +3,10 @@
 
 * run shell commands whenever [evdev] activity switches to a different device.
 
-I use this to temporarily auto-disable mousetweaks when I'm using my touch-screen
-monitor, then auto-enable mousetweaks when I switch back to my touchpad.
+I use this to auto-disable [mousetweaks] when I'm using my touchscreen
+monitor, and auto-enable mousetweaks when I switch to my touchpad.
+Thus mousetweaks does not auto-click unnecessarily when I tap my touchscreen
+monitor.
 
 ## install globally and run
 
@@ -13,12 +15,31 @@ With [node.js] installed on the target [X11] box:
     $ npm install -g evdev-trigger            # might need to prefix with sudo
     $ evdev-trigger
 
+To read from `/dev/input/` the running user needs to be a member of the *input* group.
+
 ## configure
 
 On its first run evdev-trigger copies the [default configuration file] to
 `$XDG_CONFIG_HOME/evdev-trigger.conf` which [defaults to][$XDG_CONFIG_HOME]
-`$HOME/.config/evdev-trigger.conf`. Edit this [leanconf] file with one or more rules:
+`$HOME/.config/evdev-trigger.conf`. Edit this [leanconf] file with one or more
+rules:
 
+    /dev/input/path:                # for example /dev/input/event0
+      *:                            # event filter, wildcard * matches all events
+        run: shell-command-to-run
+
+The following example configuration file enables or disables [mousetweaks]
+depending on which input device is currently in use:
+
+    # evdev-trigger.conf example configuration
+
+    /dev/input/by-id/usb-PixArtImaging_OpticalTouchScreen_0000-event-if00:
+      *:
+        run: mousetweaks --shutdown
+
+    /dev/input/by-id/usb-Wacom_Co._Ltd._Intuos_PTS-if01-event-mouse:
+      *:
+        run: mousetweaks --dwell --daemonize
 
 ## options
 
@@ -49,6 +70,7 @@ On its first run evdev-trigger copies the [default configuration file] to
 [default configuration file]: ./app/default.conf
 [evdev]: https://en.wikipedia.org/wiki/Evdev
 [leanconf]: https://github.com/dizzib/leanconf
+[mousetweaks]: https://help.gnome.org/users/mousetweaks/stable/mouse-a11y-introduction.html.en
 [node.js]: http://nodejs.org
 [JavaScript regular expression]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions
 [X11]: https://en.wikipedia.org/wiki/X_Window_System
