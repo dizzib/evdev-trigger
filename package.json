@@ -1,11 +1,13 @@
 {
   "name": "evdev-trigger",
   "version": "0.1.0",
-  "description": "A command-line tool to run shell commands on evdev activity.",
+  "description": "A command-line tool to run shell commands when evdev input focus changes.",
   "keywords": [
     "command",
     "evdev",
     "exec",
+    "focus",
+    "input",
     "shell",
     "trigger",
     "X11"

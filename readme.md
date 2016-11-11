@@ -1,12 +1,11 @@
 # evdev-trigger
 [![Build Status](https://travis-ci.org/dizzib/evdev-trigger.svg?branch=master)](https://travis-ci.org/dizzib/evdev-trigger)
 
-* run shell commands whenever [evdev] activity switches to a different device.
+* run shell commands when [evdev] input focus changes.
 
 I use this to auto-disable [mousetweaks] when I'm using my touchscreen
 monitor, and auto-enable mousetweaks when I switch to my touchpad.
-Thus mousetweaks does not auto-click unnecessarily when I tap my touchscreen
-monitor.
+This prevents unnecessary auto-clicks when tapping my touchscreen monitor.
 
 ## install globally and run
 

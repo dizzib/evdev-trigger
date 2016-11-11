@@ -1,7 +1,7 @@
 name       : \evdev-trigger
 version    : \0.1.0
-description: "A command-line tool to run shell commands on evdev activity."
-keywords   : <[ command evdev exec shell trigger X11 ]>
+description: "A command-line tool to run shell commands when evdev input focus changes."
+keywords   : <[ command evdev exec focus input shell trigger X11 ]>
 homepage   : \https://github.com/dizzib/evdev-trigger
 bugs       : \https://github.com/dizzib/evdev-trigger/issues
 license:   : \MIT
