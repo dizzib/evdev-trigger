@@ -1,5 +1,5 @@
 name       : \evdev-trigger
-version    : \0.1.0
+version    : \0.2.0
 description: "A command-line tool to run shell commands when evdev input focus changes."
 keywords   : <[ command evdev exec focus input shell trigger X11 ]>
 homepage   : \https://github.com/dizzib/evdev-trigger
@@ -14,9 +14,9 @@ scripts:
   start: './task/bootstrap && node ./_build/task/repl'
   test : './task/bootstrap && node ./_build/task/npm-test'
 dependencies:
-  async      : \2.1.2
   commander  : \2.9.0
   leanconf   : \0.2.1
+  lodash     : \4.16.6
   x11        : \2.2.0
 devDependencies:
   chai       : \~3.5.0
@@ -26,7 +26,6 @@ devDependencies:
   growly     : \~1.3.0
   istanbul   : \~0.4.5
   livescript : \~1.5.0
-  lodash     : \~4.16.6
   lolex      : \~1.5.1
   mocha      : \~3.1.2
   mockery    : \~2.0.0
