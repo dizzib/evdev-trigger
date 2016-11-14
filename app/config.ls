@@ -23,9 +23,9 @@ module.exports = me =
       Fs.writeFileSync path, conf = Fs.readFileSync "#__dirname/default.conf"
     cfg = Lc.parse conf
     cache := {}
-    for path, rule of cfg
-      validate path, rule
-      cache[path] = rule
+    for key, rule of cfg
+      validate key, rule
+      cache[key] = rule
     fsw := Fs.watch path, (ev, fname) ->
       return unless ev is \change
       log "Reload #path"
@@ -35,10 +35,10 @@ module.exports = me =
     fsw?close!
     cache := null
 
-function validate path, rule
-  unless _.startsWith path, \/dev/input
-    throw new Error "Bad path #path must start with /dev/input/"
+function validate key, rule
+  unless _.startsWith key, \/dev/input
+    throw new Error "Bad path #key must start with /dev/input/"
   unless \* is filter = (_.keys rule).0
-    throw new Error "Bad rule filter at #path: #filter must be wildcard *"
+    throw new Error "Bad rule filter at #key: #filter must be wildcard *"
   unless rule.'*'.run?
-    throw new Error "Bad rule at #path: run command must be specified"
+    throw new Error "Bad rule at #key: run command must be specified"
