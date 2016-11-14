@@ -35,7 +35,7 @@ describe 'missing' ->
 
 test 'empty' -> run \empty {}
 
-test.only 'updated file should auto-reload' (done) ->
+test 'updated file should auto-reload' (done) ->
   run \event0 '/dev/input/event0':'*': run:'echo 0'
   prepare \event1
   setTimeout (-> deq T.get!, '/dev/input/event1':'*': run:'echo 1'; done!), 5
