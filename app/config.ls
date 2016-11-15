@@ -8,6 +8,19 @@ var cache, fsw
 module.exports = me =
   get : -> cache
   load: ->
+    function reload ev
+      return unless ev is \change
+      log "Reload #path"
+      me.load!
+
+    function validate key, rule
+      unless _.startsWith key, \/dev/input
+        throw new Error "Bad path #key must start with /dev/input/"
+      unless \* is filter = (_.keys rule).0
+        throw new Error "Bad rule filter at #key: #filter must be wildcard *"
+      unless rule.'*'.run?
+        throw new Error "Bad rule at #key: run command must be specified"
+
     me.reset!
     path = Args.config-path
     try
@@ -26,19 +39,8 @@ module.exports = me =
     for key, rule of cfg
       validate key, rule
       cache[key] = rule
-    fsw := Fs.watch path, (ev, fname) ->
-      return unless ev is \change
-      log "Reload #path"
-      me.load!
+    fsw := Fs.watch path, _.debounce reload, 100ms, leading:false trailing:true
     me
   reset: -> # for tests
     fsw?close!
     cache := null
-
-function validate key, rule
-  unless _.startsWith key, \/dev/input
-    throw new Error "Bad path #key must start with /dev/input/"
-  unless \* is filter = (_.keys rule).0
-    throw new Error "Bad rule filter at #key: #filter must be wildcard *"
-  unless rule.'*'.run?
-    throw new Error "Bad rule at #key: run command must be specified"

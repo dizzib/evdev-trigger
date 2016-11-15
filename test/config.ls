@@ -38,7 +38,7 @@ test 'empty' -> run \empty {}
 test 'updated file should auto-reload' (done) ->
   run \event0 '/dev/input/event0':'*': run:'echo 0'
   prepare \event1
-  setTimeout (-> deq T.get!, '/dev/input/event1':'*': run:'echo 1'; done!), 5
+  setTimeout (-> deq T.get!, '/dev/input/event1':'*': run:'echo 1'; done!), 200ms
 
 describe 'error' ->
   function run id, expect then prepare id; A.throws T.load, expect
