@@ -95,7 +95,7 @@ function start-watching tid
     ignoreInitial:true
     ignored:t.ignore
     persistent: false
-  w.on \all process # _.debounce process, 500ms, leading:true trailing:false
+  w.on \all _.debounce process, 500ms, leading:true trailing:false
 
   function process act, ipath
     log act, tid, ipath

@@ -1,5 +1,6 @@
 Ev = require \events
 Fs = require \fs
+_  = require \lodash
 
 module.exports = class extends Ev.EventEmitter
   (@path, @rule) ->
@@ -7,6 +8,7 @@ module.exports = class extends Ev.EventEmitter
 
     ~function start-reading
       s = Fs.createReadStream @path, flags:\r encoding:null
+      s.enoerr-count = 0 # multiple errors should only cause 1 retry
       s.on \data ~>
         const CHUNK-LENGTH = 8 + 8 + 2 + 2 + 4
         for i from 0 to it.length by CHUNK-LENGTH
@@ -19,6 +21,5 @@ module.exports = class extends Ev.EventEmitter
           @emit \activity
       s.on \error ~>
         log "#it (at #{@path})"
-        return unless it.code in <[ ENOENT ENODEV ]>
-        s.removeAllListeners!
-        setTimeout start-reading, 2000ms # hope the device shows up
+        return unless it.code in <[ ENOENT ENODEV ]> and 1 is s.enoerr-count += 1
+        setTimeout start-reading, 5000ms # keep retrying until the device shows up
