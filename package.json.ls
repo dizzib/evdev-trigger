@@ -32,6 +32,6 @@ devDependencies:
   shelljs    : \~0.3.0
   'wait.for' : \~0.6.6
 engines:
-  node: '>=0.10.x'
-  npm : '>=1.0.x'
+  node: '>=4'
+  npm : '>=2'
 preferGlobal: true
