@@ -1,5 +1,5 @@
 name       : \evdev-trigger
-version    : \0.2.0
+version    : \0.3.0
 description: "A command-line tool to run shell commands when evdev input focus changes."
 keywords   : <[ command evdev exec focus input shell trigger X11 ]>
 homepage   : \https://github.com/dizzib/evdev-trigger
